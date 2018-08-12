@@ -4,6 +4,7 @@ const multihashing = require('multihashing-async')
 
 module.exports = (keysProtobuf, randomBytes, crypto) => {
   crypto = crypto || require('./crypto')(randomBytes)
+  const hashingAlgorithm = 'keccak-256';
 
   class Secp256k1PublicKey {
     constructor (key) {
@@ -33,7 +34,7 @@ module.exports = (keysProtobuf, randomBytes, crypto) => {
 
     hash (callback) {
       ensure(callback)
-      multihashing(this.bytes, 'sha2-256', callback)
+      multihashing(this.bytes, hashingAlgorithm, callback)
     }
   }
 
@@ -71,12 +72,12 @@ module.exports = (keysProtobuf, randomBytes, crypto) => {
 
     hash (callback) {
       ensure(callback)
-      multihashing(this.bytes, 'sha2-256', callback)
+      multihashing(this.bytes, hashingAlgorithm, callback)
     }
   }
 
   function unmarshalSecp256k1PrivateKey (bytes, callback) {
-    callback(null, new Secp256k1PrivateKey(bytes), null)
+    callback(null, new Secp256k1PrivateKey(bytes))
   }
 
   function unmarshalSecp256k1PublicKey (bytes) {
@@ -109,10 +110,10 @@ module.exports = (keysProtobuf, randomBytes, crypto) => {
   }
 
   return {
-    Secp256k1PublicKey,
-    Secp256k1PrivateKey,
-    unmarshalSecp256k1PrivateKey,
-    unmarshalSecp256k1PublicKey,
+    PublicKey: Secp256k1PublicKey,
+    PrivateKey: Secp256k1PrivateKey,
+    unmarshalPrivateKey: unmarshalSecp256k1PrivateKey,
+    unmarshalPublicKey: unmarshalSecp256k1PublicKey,
     generateKeyPair
   }
 }
