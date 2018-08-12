@@ -110,10 +110,10 @@ module.exports = (keysProtobuf, randomBytes, crypto) => {
   }
 
   return {
-    PublicKey: Secp256k1PublicKey,
-    PrivateKey: Secp256k1PrivateKey,
-    unmarshalPrivateKey: unmarshalSecp256k1PrivateKey,
-    unmarshalPublicKey: unmarshalSecp256k1PublicKey,
+    Secp256k1PublicKey,
+    Secp256k1PrivateKey,
+    unmarshalSecp256k1PrivateKey,
+    unmarshalSecp256k1PublicKey,
     generateKeyPair
   }
 }
